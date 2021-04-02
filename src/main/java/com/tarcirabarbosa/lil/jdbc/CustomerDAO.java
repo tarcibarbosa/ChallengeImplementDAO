@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CustomerDAO extends DataAccessObject<Customer> {
     private static final String INSERT = "INSERT INTO customer (first_name, last_name, email) VALUES (?, ?, ?)";
-    private static final String GET_ONE = "SELECT customer.id, first_name, last_name, email WHERE customer.id = ?";
+    private static final String GET_ONE = "SELECT customer.id, first_name, last_name, email FROM customer WHERE customer.id = ?";
     private static final String UPDATE = "UPDATE customer SET first_name = ?, last_name = ?, email = ? WHERE customer.id = ?";
     private static final String DELETE = "DELETE FROM customer.id WHERE customer.id = ?";
     private static final String FIND_ALL = "SELECT * FROM customer";

@@ -13,10 +13,10 @@ import java.util.List;
 
 public class ProductDAO extends DataAccessObject<Product> {
     private static final String INSERT = "INSERT INTO product (code, name, price, size, variety) VALUES (?, ?, ?, ?, ?)";
-    private static final String GET_ONE = "SELECT product_id, code, name, price, size, variety WHERE product_id = ?";
+    private static final String GET_ONE = "SELECT product_id, code, name, price, size, variety FROM product WHERE product_id = ?";
     private static final String FIND_ALL = "SELECT * FROM product";
     private static final String UPDATE = "UPDATE product SET code = ?, name = ?, price = ?, size = ?, variety = ? WHERE product_id = ?";
-    private static final String DELETE = "DELETE product WHERE product_id = ?";
+    private static final String DELETE = "DELETE FROM product WHERE product_id = ?";
 
     public ProductDAO(Connection connection) {
         super(connection);

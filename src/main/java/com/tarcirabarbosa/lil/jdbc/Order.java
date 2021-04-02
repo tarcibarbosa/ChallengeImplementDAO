@@ -1,42 +1,46 @@
 package com.tarcirabarbosa.lil.jdbc;
 
+import com.tarcirabarbosa.lil.jdbc.util.DataTransferObject;
 import com.tarcirabarbosa.lil.jdbc.util.OrderStatus;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class Order {
+public class Order implements DataTransferObject {
     private long id;
-    private String creationDate;
+    private Date creationDate;
     private Double totalDue;
     private OrderStatus orderStatusEnum;
     private SalesPerson salesPerson;
     private Customer customer;
-    private List<OrderItems> orderItems;
+    private List<OrderItem> listOrderItem;
 
-    public Order(long id, String creationDate, Double totalDue, OrderStatus orderStatusEnum, SalesPerson salesPerson,
-                 Customer customer, List<OrderItems> orderItems) {
+    public Order(long id, Date creationDate, Double totalDue, OrderStatus orderStatusEnum, SalesPerson salesPerson,
+                 Customer customer, List<OrderItem> listOrderItem) {
         this.id = id;
         this.creationDate = creationDate;
         this.totalDue = totalDue;
         this.orderStatusEnum = orderStatusEnum;
         this.salesPerson = salesPerson;
         this.customer = customer;
-        this.orderItems = orderItems;
+        this.listOrderItem = listOrderItem;
     }
 
+    @Override
     public long getId() {
-        return id;
+        return 0;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -72,12 +76,17 @@ public class Order {
         this.customer = customer;
     }
 
-    public List<OrderItems> getOrderItems() {
-        return orderItems;
+    public List<OrderItem> getListOrderItem() {
+        return listOrderItem;
     }
 
-    public void setOrderItems(List<OrderItems> orderItems) {
-        this.orderItems = orderItems;
+    public void setListOrderItem(List<OrderItem> listOrderItem) {
+        this.listOrderItem = listOrderItem;
+    }
+
+    public String dateFormat(Date date) {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        return dateFormat.format(date);
     }
 
     @Override
@@ -89,7 +98,7 @@ public class Order {
                 ", orderStatusEnum=" + orderStatusEnum +
                 ", salesPerson=" + salesPerson +
                 ", customer=" + customer +
-                ", orderItems=" + orderItems +
+                ", orderItems=" + listOrderItem +
                 '}';
     }
 }

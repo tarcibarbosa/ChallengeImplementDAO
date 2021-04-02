@@ -15,6 +15,9 @@ public class Customer implements DataTransferObject {
         this.email = email;
     }
 
+    public Customer() {
+    }
+
     @Override
     public long getId() {
         return id;

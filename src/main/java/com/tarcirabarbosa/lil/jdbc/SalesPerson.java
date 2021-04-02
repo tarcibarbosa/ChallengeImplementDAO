@@ -15,6 +15,10 @@ public class SalesPerson implements DataTransferObject {
         this.email = email;
     }
 
+    public SalesPerson() {
+
+    }
+
     public long getId() {
         return id;
     }
