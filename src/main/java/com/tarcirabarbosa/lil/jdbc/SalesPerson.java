@@ -1,14 +1,26 @@
 package com.tarcirabarbosa.lil.jdbc;
 
-public class SalesPerson {
+import com.tarcirabarbosa.lil.jdbc.util.DataTransferObject;
+
+public class SalesPerson implements DataTransferObject {
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
 
-    public SalesPerson(String firstName, String lastName, String email) {
+    public SalesPerson(long id, String firstName, String lastName, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -38,7 +50,8 @@ public class SalesPerson {
     @Override
     public String toString() {
         return "SalesPerson{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';

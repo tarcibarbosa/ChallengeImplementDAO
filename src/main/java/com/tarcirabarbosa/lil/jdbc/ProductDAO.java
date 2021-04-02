@@ -47,8 +47,8 @@ public class ProductDAO extends DataAccessObject<Product> {
     public List<Product> findAll() {
         Product product = null;
         List<Product> listProduct = new ArrayList<>();
-        try (PreparedStatement pre_statement = this.connection.prepareStatement(FIND_ALL)) {
-            ResultSet resultSet = pre_statement.executeQuery(FIND_ALL);
+        try (PreparedStatement pre_statement = this.connection.prepareStatement(GET_ONE)) {
+            ResultSet resultSet = pre_statement.executeQuery(GET_ONE);
             while (resultSet.next()) {
                 product.setId(resultSet.getLong("product_id"));
                 product.setCode(resultSet.getLong("code"));
@@ -56,7 +56,13 @@ public class ProductDAO extends DataAccessObject<Product> {
                 product.setPrice(resultSet.getDouble("price"));
                 product.setProductSize(ProductSize.valueOf(resultSet.getString("size")));
                 product.setProductVariety(ProductVariety.valueOf(resultSet.getString("variety")));
-                listProduct.add(new Product(product));
+                listProduct.add(new Product(
+                        product.getId(),
+                        product.getCode(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getProductSize(),
+                        product.getProductVariety()));
             }
             return listProduct;
         } catch (SQLException e) {
@@ -95,7 +101,7 @@ public class ProductDAO extends DataAccessObject<Product> {
             pre_statement.execute();
             int id = this.getLastValue(PRODUCT_SEQUENCE);
             product = this.findById(id);
-            return this.findById(product.getId());
+            return product;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

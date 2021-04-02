@@ -12,14 +12,13 @@ public class Product implements DataTransferObject {
     private ProductSize productSize;
     private ProductVariety productVariety;
 
-    public Product(Product product) {
-        this.id = product.id;
-        this.code = product.code;
-        this.name = product.name;
-        this.price = product.price;
-        this.productSize = product.productSize;
-        this.productVariety = product.productVariety;
-
+    public Product(long id, long code, String name, double price, ProductSize productSize, ProductVariety productVariety) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.price = price;
+        this.productSize = productSize;
+        this.productVariety = productVariety;
     }
 
     @Override

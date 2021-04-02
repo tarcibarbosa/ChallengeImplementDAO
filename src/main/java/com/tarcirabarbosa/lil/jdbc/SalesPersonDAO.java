@@ -9,30 +9,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO extends DataAccessObject<Customer> {
-    private static final String INSERT = "INSERT INTO customer (first_name, last_name, email) VALUES (?, ?, ?)";
-    private static final String GET_ONE = "SELECT customer.id, first_name, last_name, email WHERE customer.id = ?";
-    private static final String UPDATE = "UPDATE customer SET first_name = ?, last_name = ?, email = ? WHERE customer.id = ?";
-    private static final String DELETE = "DELETE FROM customer.id WHERE customer.id = ?";
-    private static final String FIND_ALL = "SELECT * FROM customer";
+public class SalesPersonDAO extends DataAccessObject<SalesPerson> {
+    private static final String INSERT = "INSERT INTO sales_person (first_name, last_name, email) VALUES (?, ?, ?)";
+    private static final String GET_ONE = "SELECT sales_person.id, first_name, last_name, email WHERE sales_person.id = ?";
+    private static final String UPDATE = "UPDATE sales_person SET first_name = ?, last_name = ?, email = ? WHERE sales_person.id = ?";
+    private static final String DELETE = "DELETE FROM sales_person.id WHERE sales_person.id = ?";
+    private static final String FIND_ALL = "SELECT * FROM sales_person";
 
-    public CustomerDAO(Connection connection) {
+    public SalesPersonDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public Customer findById(long id) {
-        Customer customer = null;
+    public SalesPerson findById(long id) {
+        SalesPerson salesPerson = null;
         try (PreparedStatement pre_statement = this.connection.prepareStatement(GET_ONE)) {
             pre_statement.setLong(1, id);
             ResultSet resultSet = pre_statement.executeQuery();
             while (resultSet.next()) {
-                customer.setId(resultSet.getLong("customer.id"));
-                customer.setFirstName(resultSet.getString("first_name"));
-                customer.setLastName(resultSet.getString("last_name"));
-                customer.setEmail(resultSet.getString("email"));
+                salesPerson.setId(resultSet.getLong("sales_person.id"));
+                salesPerson.setFirstName(resultSet.getString("first_name"));
+                salesPerson.setLastName(resultSet.getString("last_name"));
+                salesPerson.setEmail(resultSet.getString("email"));
             }
-            return customer;
+            return salesPerson;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -40,21 +40,21 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     }
 
     @Override
-    public List<Customer> findAll() {
-        Customer customer = null;
-        List<Customer> listCustomer = new ArrayList<>();
+    public List<SalesPerson> findAll() {
+        SalesPerson salesPerson = null;
+        List<SalesPerson> listCustomer = new ArrayList<>();
         try (PreparedStatement pre_statement = this.connection.prepareStatement(FIND_ALL)) {
             ResultSet resultSet = pre_statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                customer.setId(resultSet.getLong("customer.id"));
-                customer.setFirstName(resultSet.getString("first_name"));
-                customer.setLastName(resultSet.getString("last_name"));
-                customer.setEmail(resultSet.getString("email"));
-                listCustomer.add(new Customer(
-                        customer.getId(),
-                        customer.getFirstName(),
-                        customer.getLastName(),
-                        customer.getEmail()));
+                salesPerson.setId(resultSet.getLong("sales_person.id"));
+                salesPerson.setFirstName(resultSet.getString("first_name"));
+                salesPerson.setLastName(resultSet.getString("last_name"));
+                salesPerson.setEmail(resultSet.getString("email"));
+                listCustomer.add(new SalesPerson(
+                        salesPerson.getId(),
+                        salesPerson.getFirstName(),
+                        salesPerson.getLastName(),
+                        salesPerson.getEmail()));
             }
             return listCustomer;
         } catch (SQLException e) {
@@ -64,36 +64,36 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     }
 
     @Override
-    public Customer update(Customer dto) {
-        Customer customer = null;
+    public SalesPerson update(SalesPerson dto) {
+        SalesPerson salesPerson = null;
         try (PreparedStatement pre_statement = this.connection.prepareStatement(UPDATE)) {
             pre_statement.setString(1, dto.getFirstName());
             pre_statement.setString(2, dto.getLastName());
             pre_statement.setString(3, dto.getEmail());
             pre_statement.execute();
-            customer = this.findById(dto.getId());
+            salesPerson = this.findById(dto.getId());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return customer;
+        return salesPerson;
     }
 
     @Override
-    public Customer create(Customer dto) {
-        Customer customer = null;
+    public SalesPerson create(SalesPerson dto) {
+        SalesPerson salesPerson = null;
         try (PreparedStatement pre_statement = this.connection.prepareStatement(INSERT)) {
             pre_statement.setString(1, dto.getFirstName());
             pre_statement.setString(2, dto.getLastName());
             pre_statement.setString(3, dto.getEmail());
             pre_statement.execute();
             int id = this.getLastValue(CUSTOMER_SEQUENCE);
-            customer = this.findById(id);
+            salesPerson = this.findById(id);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return customer;
+        return salesPerson;
     }
 
     @Override

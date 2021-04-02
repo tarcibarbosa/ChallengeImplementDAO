@@ -8,11 +8,11 @@ public class Customer implements DataTransferObject {
     private String lastName;
     private String email;
 
-    public Customer(Customer customer) {
-        this.id = customer.id;
-        this.firstName = customer.firstName;
-        this.lastName = customer.lastName;
-        this.email = customer.email;
+    public Customer(long id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     @Override
