@@ -8,13 +8,6 @@ public class OrderItem implements DataTransferObject {
     private Product product;
     private Order order;
 
-    public OrderItem(long id, int quantity, Product product, Order order) {
-        this.id = id;
-        this.quantity = quantity;
-        this.product = product;
-        this.order = order;
-    }
-
     public OrderItem() {
 
     }
