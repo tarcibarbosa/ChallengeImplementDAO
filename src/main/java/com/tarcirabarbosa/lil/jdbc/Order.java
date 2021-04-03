@@ -11,20 +11,23 @@ public class Order implements DataTransferObject {
     private long id;
     private Date creationDate;
     private Double totalDue;
-    private OrderStatus orderStatusEnum;
+    private String orderStatus;
     private SalesPerson salesPerson;
     private Customer customer;
     private List<OrderItem> listOrderItem;
 
-    public Order(long id, Date creationDate, Double totalDue, OrderStatus orderStatusEnum, SalesPerson salesPerson,
+    public Order(long id, Date creationDate, Double totalDue, String orderStatus, SalesPerson salesPerson,
                  Customer customer, List<OrderItem> listOrderItem) {
         this.id = id;
         this.creationDate = creationDate;
         this.totalDue = totalDue;
-        this.orderStatusEnum = orderStatusEnum;
+        this.orderStatus = orderStatus;
         this.salesPerson = salesPerson;
         this.customer = customer;
         this.listOrderItem = listOrderItem;
+    }
+
+    public Order() {
     }
 
     @Override
@@ -52,12 +55,12 @@ public class Order implements DataTransferObject {
         this.totalDue = totalDue;
     }
 
-    public OrderStatus getOrderStatusEnum() {
-        return orderStatusEnum;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderStatusEnum(OrderStatus orderStatusEnum) {
-        this.orderStatusEnum = orderStatusEnum;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public SalesPerson getSalesPerson() {
@@ -95,7 +98,7 @@ public class Order implements DataTransferObject {
                 "id=" + id +
                 ", creationDate='" + creationDate + '\'' +
                 ", totalDue=" + totalDue +
-                ", orderStatusEnum=" + orderStatusEnum +
+                ", orderStatus=" + orderStatus +
                 ", salesPerson=" + salesPerson +
                 ", customer=" + customer +
                 ", orderItems=" + listOrderItem +

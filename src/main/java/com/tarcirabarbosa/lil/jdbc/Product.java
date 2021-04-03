@@ -6,20 +6,24 @@ import com.tarcirabarbosa.lil.jdbc.util.ProductVariety;
 
 public class Product implements DataTransferObject {
     private long id;
-    private long code;
+    private String code;
     private String name;
     private double price;
-    private ProductSize productSize;
-    private ProductVariety productVariety;
+    private Integer productSize;
+    private String productVariety;
+    private String status;
 
-    public Product(long id, long code, String name, double price, ProductSize productSize, ProductVariety productVariety) {
+    public Product(long id, String code, String name, double price, Integer productSize, String productVariety, String status) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.price = price;
         this.productSize = productSize;
         this.productVariety = productVariety;
+        this.status = status;
     }
+
+    public Product() { }
 
     @Override
     public long getId() {
@@ -30,11 +34,11 @@ public class Product implements DataTransferObject {
         this.id = id;
     }
 
-    public long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -54,20 +58,28 @@ public class Product implements DataTransferObject {
         this.price = price;
     }
 
-    public ProductSize getProductSize() {
+    public Integer getProductSize() {
         return productSize;
     }
 
-    public void setProductSize(ProductSize productSize) {
+    public void setProductSize(Integer productSize) {
         this.productSize = productSize;
     }
 
-    public ProductVariety getProductVariety() {
+    public String getProductVariety() {
         return productVariety;
     }
 
-    public void setProductVariety(ProductVariety productVariety) {
+    public void setProductVariety(String productVariety) {
         this.productVariety = productVariety;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -79,6 +91,7 @@ public class Product implements DataTransferObject {
                 ", price=" + price +
                 ", productSize=" + productSize +
                 ", productVariety=" + productVariety +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

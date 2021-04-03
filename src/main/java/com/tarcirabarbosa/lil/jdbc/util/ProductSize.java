@@ -1,22 +1,30 @@
 package com.tarcirabarbosa.lil.jdbc.util;
 
 public enum ProductSize {
-    S("Small"),
-    M("Medium"),
-    L("Large"),
-    XL("Extra Large"),
-    XXL("Extra Plus Large");
 
-    private final String description;
+    CODE_1(20, "20"), CODE_2(32, "32"), CODE_3(40, "40");
 
-    ProductSize(String description) {
-        this.description = description;
+    private final Integer value;
+    private final String key;
+
+    ProductSize(Integer value, String key) {
+        this.value = value;
+        this.key = key;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     @Override
     public String toString() {
         return "ProductSize{" +
-                "description='" + description + '\'' +
+                "value=" + value +
+                ", key='" + key + '\'' +
                 '}';
     }
 }

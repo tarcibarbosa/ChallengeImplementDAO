@@ -8,6 +8,8 @@ public abstract class DataAccessObject <T extends DataTransferObject> {
     protected final String LAST_VALUE = "SELECT last_value FROM ";
     protected final static String CUSTOMER_SEQUENCE = "hp_customer_seq";
     protected final static String PRODUCT_SEQUENCE = "hp_product_seq";
+    protected final static String SALESPERSON_SEQUENCE = "hp_salesperson_seq";
+    protected final static String ORDER_SEQUENCE = "hp_order_seq";
 
     public DataAccessObject(Connection connection) {
         super();
@@ -23,7 +25,7 @@ public abstract class DataAccessObject <T extends DataTransferObject> {
         int key = 0;
         String sql = LAST_VALUE + sequence;
 
-        try (Statement statement = connection.createStatement();) {
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 key = resultSet.getInt(1);

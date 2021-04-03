@@ -4,40 +4,27 @@ import com.tarcirabarbosa.lil.jdbc.util.DataTransferObject;
 
 public class OrderItem implements DataTransferObject {
     private long id;
-    private Product product;
-    private long order_id;
     private int quantity;
+    private Product product;
+    private Order order;
 
-    public OrderItem(long id, Product product, long order_id, int quantity) {
+    public OrderItem(long id, int quantity, Product product, Order order) {
         this.id = id;
-        this.product = product;
-        this.order_id = order_id;
         this.quantity = quantity;
+        this.product = product;
+        this.order = order;
     }
 
-    @Override
+    public OrderItem() {
+
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public long getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(long order_id) {
-        this.order_id = order_id;
     }
 
     public int getQuantity() {
@@ -48,13 +35,29 @@ public class OrderItem implements DataTransferObject {
         this.quantity = quantity;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
-                ", product=" + product +
-                ", order_id=" + order_id +
                 ", quantity=" + quantity +
+                ", product=" + product +
+                ", order=" + order +
                 '}';
     }
 }
