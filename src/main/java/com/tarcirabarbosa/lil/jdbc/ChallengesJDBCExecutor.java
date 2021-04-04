@@ -14,10 +14,8 @@ public class ChallengesJDBCExecutor {
             //Create Connection
             Connection connection = dcm.getConnection();
             //Order Data access object
-            OrderDAO orderDAO = new OrderDAO(connection);
-            List<Order> order = orderDAO.getOrdersForCustomer(789);
-            order.forEach(System.out::println);
-
+            CustomerDAO customerDAO = new CustomerDAO(connection);
+            customerDAO.findAllCustomerWithLimit(20).forEach(System.out::println);
         } catch (SQLException e) {
             e.printStackTrace();
         }
