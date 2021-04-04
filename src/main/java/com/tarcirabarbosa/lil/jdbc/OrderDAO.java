@@ -136,7 +136,7 @@ public class OrderDAO extends DataAccessObject<Order> {
             while (resultSet.next()) {
                 long localOrderId = resultSet.getLong("order_id");
                 if(orderId != localOrderId) {
-                    //ADD order in list of orders
+                    //New object order and add in list of orders
                     order = new Order();
                     orderList.add(order);
                     order.setId(localOrderId);
@@ -155,7 +155,7 @@ public class OrderDAO extends DataAccessObject<Order> {
                     order.setOrderStatus(resultSet.getString("status"));
                     order.setCustomer(customer);
                     order.setSalesPerson(salesPerson);
-                    //Create object Order item list
+                    //New list of Order item objects
                     List<OrderItem> orderItemList = new ArrayList<>();
                     order.setListOrderItem(orderItemList);
                     //Populate Product field
@@ -164,7 +164,7 @@ public class OrderDAO extends DataAccessObject<Order> {
                     product.setProductSize(resultSet.getInt("item_size"));
                     product.setProductVariety(resultSet.getString("item_variety"));
                     product.setPrice(resultSet.getDouble("item_price"));
-                    //Populate OrderItem field
+                    //New order item object and populate field
                     OrderItem orderItem = new OrderItem();
                     orderItem.setProduct(product);
                     orderItem.setQuantity(resultSet.getInt("item_quanitty"));
