@@ -14,6 +14,7 @@ public class OrderDAO extends DataAccessObject<Order> {
     private static final String UPDATE = "UPDATE orders SET order_status = ? WHERE orders_id = ?";
     private static final String DELETE = "DELETE FROM orders WHERE orders_id = ?";
     private static final String FIND_ALL = "SELECT * FROM orders";
+    private static final String GET_ORDERS_FOR_CUSTOMER_ID = "SELECT * FROM get_orders_by_customer(?)";
 
     public OrderDAO(Connection connection) {
         super(connection);
@@ -34,8 +35,8 @@ public class OrderDAO extends DataAccessObject<Order> {
             while (resultSet.next()) {
                 if(orderId == 0) {
                     order.setId(resultSet.getLong(1));
-                    order.setCreationDate(resultSet.getDate("creation_date"));
                     order.setTotalDue(resultSet.getDouble("total_due"));
+                    order.setCreationDate(resultSet.getDate("creation_date"));
                     order.setOrderStatus(resultSet.getString("status"));
                     order.setSalesPerson(salesPersonDAO.findById(resultSet.getLong("salesperson_id")));
                     order.setCustomer(customerDAO.findById(resultSet.getLong("customer_id")));
@@ -116,6 +117,51 @@ public class OrderDAO extends DataAccessObject<Order> {
             pre_statement.setLong(1, id);
             pre_statement.execute();
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Order> getOrdersForCustomer (long customer_id) {
+        List<Order> orderList = new ArrayList<>();
+        Order order = new Order();
+        OrderItem orderItem = new OrderItem();
+        Customer customer = new Customer();
+        SalesPerson salesPerson = new SalesPerson();
+        Product product = new Product();
+        List<OrderItem> orderItemList = new ArrayList<>();
+        try (PreparedStatement pre_statement = this.connection.prepareStatement(GET_ORDERS_FOR_CUSTOMER_ID)) {
+            pre_statement.setLong(1, customer_id);
+            ResultSet resultSet = pre_statement.executeQuery();
+            long orderId = 0;
+            while (resultSet.next()) {
+                long localOrderId = resultSet.getLong("order_id");
+                if(localOrderId != orderId) {
+                    orderList.add(order);
+                    customer.setFirstName(resultSet.getString("cust_first_name"));
+                    customer.setLastName(resultSet.getString("cust_last_name"));
+                    customer.setEmail(resultSet.getString("cust_email"));
+                    order.setId(resultSet.getLong("order_id"));
+                    order.setCreationDate(resultSet.getDate("creation_dt"));
+                    order.setTotalDue(resultSet.getDouble("total_due"));
+                    order.setOrderStatus(resultSet.getString("status"));
+                    order.setListOrderItem(orderItemList);
+                    salesPerson.setFirstName(resultSet.getString("sales_first_name"));
+                    salesPerson.setLastName(resultSet.getString("sales_last_name"));
+                    salesPerson.setEmail(resultSet.getString("sales_email"));
+
+                }
+                product.setCode(resultSet.getString("item_code"));
+                product.setName(resultSet.getString("item_name"));
+                product.setProductSize(resultSet.getInt("item_size"));
+                product.setProductVariety(resultSet.getString("item_variety"));
+                product.setPrice(resultSet.getDouble("item_price"));
+                orderItem.setProduct(product);
+                orderItem.setQuantity(resultSet.getInt("item_quanitty"));
+                orderItemList.add(orderItem);
+            }
+            return orderList;
+        } catch(SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

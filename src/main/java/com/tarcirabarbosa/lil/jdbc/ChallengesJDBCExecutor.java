@@ -2,6 +2,7 @@ package com.tarcirabarbosa.lil.jdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ChallengesJDBCExecutor {
     public static void main (String... args) {
@@ -14,8 +15,8 @@ public class ChallengesJDBCExecutor {
             Connection connection = dcm.getConnection();
             //Order Data access object
             OrderDAO orderDAO = new OrderDAO(connection);
-            Order order = orderDAO.findById(1001);
-            System.out.println(order);
+            List<Order> order = orderDAO.getOrdersForCustomer(789);
+            order.forEach(System.out::println);
 
         } catch (SQLException e) {
             e.printStackTrace();
