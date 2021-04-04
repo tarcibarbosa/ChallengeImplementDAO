@@ -10,6 +10,7 @@ public abstract class DataAccessObject <T extends DataTransferObject> {
     protected final static String PRODUCT_SEQUENCE = "hp_product_seq";
     protected final static String SALESPERSON_SEQUENCE = "hp_salesperson_seq";
     protected final static String ORDER_SEQUENCE = "hp_order_seq";
+    protected final static String ORDER_ITEM_SEQUENCE = "hp_orderline_seq";
 
     public DataAccessObject(Connection connection) {
         super();

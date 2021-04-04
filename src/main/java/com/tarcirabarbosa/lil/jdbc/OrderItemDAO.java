@@ -88,7 +88,7 @@ public class OrderItemDAO extends DataAccessObject<OrderItem> {
             pre_statement.setLong(2, dto.getOrder().getId());
             pre_statement.setInt(3, dto.getQuantity());
             pre_statement.execute();
-            int id = this.getLastValue(PRODUCT_SEQUENCE);
+            int id = this.getLastValue(ORDER_ITEM_SEQUENCE);
             orderItem = this.findById(id);
         } catch (SQLException e) {
             e.printStackTrace();
