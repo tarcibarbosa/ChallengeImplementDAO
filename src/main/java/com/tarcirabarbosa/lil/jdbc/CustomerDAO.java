@@ -20,6 +20,8 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     private static final String FIND_ALL = "SELECT * FROM customer";
     private static final String GET_ALL_LMT = "SELECT customer_id, first_name, last_name, email, phone, address, city,"+
             "state, zipcode FROM customer ORDER BY last_name, first_name LIMIT ?";
+    private static final String GET_ALL_PAGED = "SELECT customer_id, first_name, last_name, email, phone, address, city,"+
+            "state, zipcode FROM customer ORDER BY last_name, first_name LIMIT ? OFFSET ?";
 
     public CustomerDAO(Connection connection) {
         super(connection);
@@ -134,6 +136,35 @@ public class CustomerDAO extends DataAccessObject<Customer> {
         Customer customer;
         try (PreparedStatement pre_statement = this.connection.prepareStatement(GET_ALL_LMT)) {
             pre_statement.setLong(1, limit);
+            ResultSet resultSet = pre_statement.executeQuery();
+            while(resultSet.next()) {
+                customer = new Customer();
+                customer.setId(resultSet.getLong("customer_id"));
+                customer.setFirstName(resultSet.getString("first_name"));
+                customer.setLastName(resultSet.getString("last_name"));
+                customer.setEmail(resultSet.getString("email"));
+                customer.setPhone(resultSet.getString("phone"));
+                customer.setAddress(resultSet.getString("address"));
+                customer.setCity(resultSet.getString("city"));
+                customer.setState(resultSet.getString("state"));
+                customer.setZipCode(resultSet.getString("zipcode"));
+                customerList.add(customer);
+            }
+            return customerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Customer> findAllCustomerWithLimitAndOffset(int limit, int pageNumber) {
+        List<Customer> customerList = new ArrayList<>();
+        Customer customer;
+        int offset = ((pageNumber-1) * limit);
+        if (limit < 1) { limit = 10; }
+        try (PreparedStatement pre_statement = this.connection.prepareStatement(GET_ALL_PAGED)) {
+            pre_statement.setInt(1, limit);
+            pre_statement.setInt(2, offset);
             ResultSet resultSet = pre_statement.executeQuery();
             while(resultSet.next()) {
                 customer = new Customer();
