@@ -8,7 +8,7 @@ public class ChallengesJDBCExecutor {
         DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
                 "hplussport",
                 "postgres",
-                "PASSWORD");
+                "S0c1oloG1@");
         try {
             //Create Connection
             Connection connection = dcm.getConnection();
